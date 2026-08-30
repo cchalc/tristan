@@ -15,9 +15,11 @@ via ralph-loop. Definition of done in the plan / spec.
 - [x] **Phase A** — Beacon CMS **ADOPTED on Phoenix 1.7, backed by Neon** (2026-08-30).
   Downgraded Phoenix to ~1.7 (kept LiveView 1.2); admin at `/cms`, `beacon_site "/"`
   catch-all; tables + default content migrated/populated on Neon; precommit green. See
-  `checkpoint.md` "Beacon: ADOPTED" + `lessons.md`. Follow-ups: Beacon-page styling
-  (Tailwind v3↔v4 → no-op CSS compiler for now); port marketing content into Beacon +
-  flip `/` from HomeLive.
+  `checkpoint.md` "Beacon: ADOPTED" + `lessons.md`.
+- [x] **Beacon-page styling** — `MusicStudioWeb.BeaconRuntimeCSS` compiles Beacon content
+  with Tailwind **v4** (via `@source`) + `ms-` tokens (~50 KB CSS). Pushed (eec44f73).
+- [ ] **Follow-ups**: port the marketing content into Beacon + flip `/` from HomeLive;
+  self-host Inter/Space Grotesk woff2; SEO meta/OG; portrait image.
 - [x] **Phase B** — Radix "Modern Minimal" design system (indigo/slate/small-radius
   tokens + semantic `ms-` classes) in `assets/css/app.css`. Portable to Beacon. Pushed.
 - [x] **Phase C (interim)** — `HomeLive` single page (Hero/About/Lessons&Rates/Contact)

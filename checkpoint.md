@@ -63,11 +63,13 @@ works. Done and pushed (music_studio main 4d379eff):
   green (14 tests).
 
 **Known caveats / follow-ups (not blockers):**
-- **Tailwind v3↔v4 mismatch:** Beacon 0.5.1's runtime CSS assumes Tailwind v3
-  (`@import "tailwindcss/base"`), but the app is on Tailwind v4 + daisyUI 5. Worked
-  around with a no-op CSS compiler (`MusicStudioWeb.BeaconRuntimeCSS`) that serves a
-  small base stylesheet — so **Beacon pages are only lightly styled**. Full styling
-  needs either a v4-compatible Beacon CSS pipeline or aligning Tailwind versions.
+- **Tailwind v3↔v4 mismatch: RESOLVED.** Beacon 0.5.1's runtime CSS assumes Tailwind v3;
+  the app is on v4. `MusicStudioWeb.BeaconRuntimeCSS` (a `Beacon.RuntimeCSS` behaviour)
+  now gathers the site's content into a temp dir, scans it with the **Tailwind v4** CLI
+  via `@source`, and prepends the `ms-` design tokens — producing real CSS (~50 KB:
+  v4 reset + utilities + tokens) for Beacon pages, with a base-CSS fallback so boot never
+  fails. (Sobelow: inline `sobelow_skip` on the temp-path/`System.cmd` helpers, enabled
+  via `skip: true` in `.sobelow-conf`.) music_studio main eec44f73.
 - **LiveView 1.2 HEEx deprecation** warnings at Beacon boot ("use TagEngine.compile/2")
   — cosmetic; Beacon 0.5.1 targets an older LV.
 - **Port the marketing content into Beacon** and flip `/` from `HomeLive` to a Beacon
