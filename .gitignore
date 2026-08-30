@@ -1,0 +1,7 @@
+# Local environment / secrets loaded by direnv — NEVER commit these.
+.envrc
+.envrc.local
+.env
+.env.*
+!.env.example
+.direnv/
