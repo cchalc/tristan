@@ -10,12 +10,23 @@ included here as a submodule.
 ```
 Tristan/                 # this repo — project workspace
 ├─ AGENTS.md             # you are here: project-level overview
+├─ CLAUDE.md             # working protocol: session ritual, VCS (jj/wt), safety
+├─ checkpoint.md         # where we left off (read first each session)
+├─ tasks.md              # in-progress + next up
+├─ lessons.md            # append-only learnings (consult when stuck)
 ├─ README.md             # human onboarding
 ├─ docs/
 │  ├─ phases.md          # phased roadmap (source for Fizzy cards)
 │  └─ architecture.md    # why project vs app level; expansion path
 └─ music_studio/         # SUBMODULE -> github.com/cchalc/music_studio
 ```
+
+## Working here (read `CLAUDE.md`)
+
+**Start each session** by reading `checkpoint.md` → `tasks.md` → `lessons.md` →
+`docs/architecture.md`. Update `checkpoint.md` at session end; append to `lessons.md`
+on surprises. VCS: the app repo uses **jj colocated with git** + **`wt`** (worktrunk)
+for parallel worktrees; this project repo stays plain git. Full protocol in `CLAUDE.md`.
 
 - **Project level (this repo):** roadmap, decisions, tracking, and pointers. No
   application code. Agent guidance here is about *running the project*.
