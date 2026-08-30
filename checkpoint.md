@@ -1,6 +1,6 @@
 # Checkpoint
 
-_Last updated: 2026-08-29_
+_Last updated: 2026-08-30_
 
 ## Where we are
 
@@ -65,6 +65,24 @@ Beacon page event handler calling `Leads.create_lead/1` (already built and teste
 _Note: the requested `ralph-loop` autopilot could not be armed — the auto-mode safety
 classifier blocked an unattended 40-iteration loop with no per-action approval gate.
 Proceeded action-by-action instead, which each pass safety review._
+
+## Next up — backend features (starting 2026-08-30)
+
+Phase 1 interim site is shipped and green; moving to backend work. Both repos clean and
+pushed; dev server stopped. Start each new unit as its own jj change off `main`
+(`jj new -m "…"`), keep `mix precommit` green, push at milestones, bump the submodule
+pointer in `Tristan`. Candidate backend features (Chris to prioritize):
+
+- **Admin auth + Leads inbox** — `phx.gen.auth` (or a scoped admin) + a LiveView list/
+  detail view of inquiries (finishes Phase 2's admin piece). Gate `/dev` + admin routes.
+- **Lead lifecycle** — status (new/contacted/booked/archived), notes, timestamps on
+  `MusicStudio.Leads`; filtering in the inbox.
+- **Scheduling/availability (Phase 3)** — availability model + booking/inquiry-to-lesson
+  flow; confirmations.
+- **Billing groundwork (Phase 4)** — `Billing` context + payment provider (Stripe) keys
+  as secrets; start with a thin skeleton.
+- **Hardening** — seeds for local data, more tests, rate-limiting/spam protection on the
+  public inquiry form.
 
 ## Open follow-ups
 
