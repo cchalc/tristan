@@ -3,23 +3,29 @@
 Mirrors the Fizzy board (`docs/phases.md` is the full roadmap). Keep this in sync as
 work moves.
 
-## In progress
-- _(nothing yet — Phase 0 shipped)_
+## In progress — Phase 1: Design + CMS foundation (approved 2026-08-30)
+Design decided (Beacon CMS + Radix Modern-Minimal + Capsize; single scrolling page;
+Voice/Piano/Guitar, in-person, all ages; Leads DB+email now; EssenceUI + Buzz deferred).
+Spec: `docs/superpowers/specs/2026-08-30-music-studio-design.md`. Driven autonomously
+via ralph-loop. Definition of done in the plan / spec.
 
-## Next up — Phase 1: Core marketing site (Fizzy #23)
-- [ ] Site shell: layout, nav, footer, responsive container.
-- [ ] Home page.
-- [ ] About page.
-- [ ] Lessons / Services page.
-- [ ] Contact page (static first; the form is Phase 2).
-- [ ] Design pass (typography, spacing, imagery) — see `ui-and-assets` skill.
-- [ ] SEO basics: title/meta, sitemap, robots; favicon; Open Graph.
+- [ ] **Phase A** — install Beacon + BeaconLiveAdmin (spike CSS/Tailwind first);
+  router (`/` site, `/cms` admin); migrations; retire default Phoenix home + daisyUI.
+- [ ] **Phase B** — design system: Radix token layer (indigo/slate/small-radius) +
+  Capsize type scale + self-hosted Inter/Space Grotesk in the Beacon site stylesheet;
+  Beacon layout (sticky nav, footer).
+- [ ] **Phase C** — Beacon components (section, card, rate_table, nav, cta) + the
+  single page (Hero/About/Lessons&Rates/Contact) + seed content from `docs/info/`.
+- [ ] **Phase D** — `MusicStudio.Leads` context + `Lead` schema + migration + tested
+  changeset; `Leads.Notifier` (Swoosh); wire the inquiry form (Beacon event handler,
+  fallback mounted LiveView).
+- [ ] **Phase E** — verify (precommit; render; admin edit; form persists + emails);
+  update living docs; bump submodule pointer; push.
 
-## Then — Phase 2: Leads / contact form (Fizzy #24)
-- [ ] `Leads` context + schema + migration (name, email, message, source).
-- [ ] LiveView contact form with `to_form` validation.
-- [ ] Persist inquiries + basic admin list view.
-- [ ] (Optional) email notification to the teacher on new inquiry.
+## Then — Phase 2+: Buzz + EssenceUI (deferred)
+- [ ] Buzz integration (`wss://musicstudio.communities.buzz.xyz`) — leads on private
+  channels + student community.
+- [ ] EssenceUI for app-side LiveView UI (e.g. a leads/admin dashboard).
 
 ## Later (Fizzy #25–#28)
 - Phase 3 — scheduling/calendar · Phase 4 — billing · Phase 5 — marketing · Phase 6 — analytics.

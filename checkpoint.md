@@ -28,8 +28,15 @@ _Last updated: 2026-08-29_
 
 ## Next
 
-**Phase 1 — Core marketing site.** See `tasks.md`. Start with the site layout/nav and
-the Home/About/Lessons/Contact pages.
+**Phase 1 — Design + CMS foundation (in progress, autonomous run started 2026-08-30).**
+Design approved and spec written to `docs/superpowers/specs/2026-08-30-music-studio-design.md`.
+Approach: **Beacon CMS** owns the public site; **Radix Modern-Minimal** aesthetic
+(indigo/slate/small-radius) delivered via Beacon's Tailwind + **Capsize** + self-hosted
+fonts; **single scrolling page** (Hero/About/Lessons&Rates/Contact); Voice/Piano/Guitar,
+in-person, all ages; **Leads** context (DB + Swoosh email) built now; **EssenceUI** and
+**Buzz** deferred. Being driven autonomously via a **ralph-loop** (jj per-unit commits,
+`wt` worktree for the independent Leads context). Phases A→E and the definition of done
+are in `tasks.md` and the plan file. Re-read those + `jj log` each iteration to orient.
 
 ## Open follow-ups
 
