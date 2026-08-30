@@ -39,3 +39,13 @@ first (the session-start hook does the latter).
 Colocated jj works great in the app repo (`music_studio`), but the `Tristan`
 superproject has a submodule and jj's submodule support is limited — kept Tristan on
 plain git. jj colocate is non-destructive; git stays authoritative for GitHub.
+
+### 2026-08-29 — Fizzy API (Basecamp open-source) access pattern
+Fizzy is open-source (`github.com/basecamp/fizzy`, API docs under `docs/api/`). Base
+`https://app.fizzy.do/:account_slug/...`; `Authorization: Bearer <token>`, `Accept:
+application/json`. Our account slug `6112896`, board `03grwl6spdsdwf8pj986fp5vh`
+("music-studio"). Create a card: `POST /:acct/boards/:board/cards` with
+`{"card":{"title","description"}}` → lands in **triage** (no column). Close/reopen:
+`POST|DELETE /:acct/cards/:number/closure`. Token is in `Tristan/.envrc` (direnv) —
+run scripts with `direnv exec . …` so the token never lands in logs. Verify a token:
+`GET https://app.fizzy.do/my/identity`.

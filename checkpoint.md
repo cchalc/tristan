@@ -17,6 +17,9 @@ _Last updated: 2026-08-29_
   Fizzy token.
 - **VCS:** app repo uses **jj colocated with git**; `wt` (worktrunk) for parallel
   worktrees. `Tristan` project repo is plain git (tracks the submodule pointer).
+- **Working protocol** adopted from ai-kitchen: `CLAUDE.md` + living docs
+  (`checkpoint.md`, `tasks.md`, `lessons.md`). `docs/architecture.md` now has a
+  "How it all relates" map (diagram + component table) — read that for the big picture.
 - **GitHub (personal `cchalc` account, public):**
   - App: https://github.com/cchalc/music_studio
   - Project: https://github.com/cchalc/tristan (links the app as a submodule)

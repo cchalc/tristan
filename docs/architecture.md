@@ -7,6 +7,50 @@ level"? In a plain Phoenix app those are the same thing (one repo == one project
 This workspace deliberately separates them so the application stays **isolated** and
 **portable**, with room to add sibling projects (e.g. analytics) without interference.
 
+## How it all relates
+
+```mermaid
+flowchart TB
+  subgraph gh["GitHub · personal account cchalc"]
+    ght["tristan repo"]
+    ghm["music_studio repo"]
+  end
+
+  subgraph ws["Local workspace"]
+    t["Tristan/ — project repo (plain git)"]
+    subgraph app["music_studio/ — submodule (jj colocated + git)"]
+      libc["lib/music_studio/ — contexts / business logic"]
+      libw["lib/music_studio_web/ — LiveView, router, components"]
+      cfg["config/ — config·dev·test·prod·runtime + dev.secret.exs (git-ignored)"]
+      sk[".claude/skills/ → .agents/skills (mirror, guarded by mix skills.check)"]
+      tc[".tool-versions — Elixir 1.18.4 / OTP 28 via mise"]
+    end
+  end
+
+  fz["Fizzy board 'music-studio'"]
+
+  t -- "records submodule pointer" --> app
+  t -- "git push" --> ght
+  app -- "jj git push / git push" --> ghm
+  t -- "docs/phases.md ⇄ cards" --> fz
+```
+
+**The pieces and how they connect:**
+
+| Piece | Where | Related to |
+|---|---|---|
+| Project repo | `Tristan/` (plain git) → `cchalc/tristan` | Holds planning + a **submodule pointer** to the app; tracked to Fizzy via `docs/phases.md`. |
+| App repo | `music_studio/` (jj + git) → `cchalc/music_studio` | The Phoenix app; included in `Tristan` as a submodule. Push with `jj git push`. |
+| Contexts | `music_studio/lib/music_studio/` | Business logic per domain (leads, later billing/etc.). |
+| Web | `music_studio/lib/music_studio_web/` | LiveView, router, components; calls into contexts. |
+| Config layers | `music_studio/config/` | Committed `*.exs` + git-ignored `dev.secret.exs`; prod reads env in `runtime.exs`. |
+| Agent skills | `music_studio/.claude/skills/` | Mirrored to `.agents/skills`, guarded by `mix skills.check`; loaded by trigger. |
+| Toolchain | `music_studio/.tool-versions` | Elixir/OTP pinned, provisioned by mise. |
+| Tracking | Fizzy board + GitHub issues | Phases ↔ Fizzy cards; dev/debug ↔ issues on `cchalc/music_studio`. |
+
+Session continuity lives in the project repo's living docs (`checkpoint.md`, `tasks.md`,
+`lessons.md`) — see `../CLAUDE.md` for the working protocol.
+
 ## Two altitudes
 
 ### Project level — the `Tristan` repo
