@@ -32,10 +32,19 @@ Design approved; spec at `docs/superpowers/specs/2026-08-30-music-studio-design.
 Approach: Beacon CMS + Radix Modern-Minimal + Capsize; single scrolling page;
 Voice/Piano/Guitar, in-person, all ages; Leads (DB + email) now; EssenceUI + Buzz later.
 
-### Done and pushed
+### Done and pushed (`cchalc/music_studio` main)
 - **Leads context** (`MusicStudio.Leads` + `Lead` schema + migration + changeset +
-  `Leads.Notifier` Swoosh) — 7 unit tests, `mix precommit` green, on `main`
-  (`cchalc/music_studio`, commit 128594e7). This is Beacon-independent and durable.
+  `Leads.Notifier` Swoosh) — 7 unit tests. Beacon-independent and durable.
+- **Radix "Modern Minimal" design system** — token layer + semantic `ms-` classes in
+  `assets/css/app.css` (indigo accent, slate gray, small radius; Inter/Space Grotesk
+  with system fallback until self-hosted woff2 added). Portable into a Beacon site
+  stylesheet unchanged.
+- **Interim marketing site** — `MusicStudioWeb.HomeLive` at `/`: single scrolling page
+  (Hero → About → Lessons & Rates → Contact) with the inquiry form wired to
+  `Leads.create_lead/1` + `Notifier`. Default Phoenix home retired. 3 LiveView tests.
+  Live-verified (HTTP 200). `mix precommit` green (14 tests). Commit f6a40ade.
+  **This is the interim/Option-3 path** — section markup + `ms-` classes port into a
+  Beacon page/template later if/when the CMS decision lands there.
 
 ### BLOCKED — the Beacon decision (needs Chris)
 Beacon CMS **cannot run on our pinned Phoenix 1.8.13 / Elixir 1.18.4** (see `lessons.md`

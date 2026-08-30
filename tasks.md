@@ -15,11 +15,13 @@ via ralph-loop. Definition of done in the plan / spec.
 - [!] **Phase A** — install Beacon — **BLOCKED**: Beacon incompatible with Phoenix
   1.8 / Elixir 1.18 (see `checkpoint.md` "Beacon decision" + `lessons.md`). Parked as
   jj change `mquosplq`. Needs Chris to choose fork-patch / downgrade / hand-built / wait.
-- [~] **Phase B** — design system (Radix indigo/slate/small-radius tokens + Capsize
-  type scale). Building now as portable CSS (reusable under any Beacon decision).
-- [~] **Phase C** — section content/markup (Hero/About/Lessons&Rates/Contact) from
-  `docs/info/`. Building as portable HEEx (ports to Beacon page templates later).
-- [ ] **Phase E** — wire inquiry form to Leads + verify; revisit once the CMS path is chosen.
+- [x] **Phase B** — Radix "Modern Minimal" design system (indigo/slate/small-radius
+  tokens + semantic `ms-` classes) in `assets/css/app.css`. Portable to Beacon. Pushed.
+- [x] **Phase C (interim)** — `HomeLive` single page (Hero/About/Lessons&Rates/Contact)
+  from `docs/info/`, wired to the Leads form. Live-verified, precommit green. Pushed
+  (f6a40ade). Ports to Beacon page templates when/if that path is chosen.
+- [ ] **Follow-ups**: self-host Inter/Space Grotesk woff2 (currently system fallback);
+  decide CMS path (see checkpoint "Beacon decision"); SEO meta/OG/sitemap; portrait image.
 
 ## Then — Phase 2+: Buzz + EssenceUI (deferred)
 - [ ] Buzz integration (`wss://musicstudio.communities.buzz.xyz`) — leads on private
