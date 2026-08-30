@@ -9,18 +9,17 @@ Voice/Piano/Guitar, in-person, all ages; Leads DB+email now; EssenceUI + Buzz de
 Spec: `docs/superpowers/specs/2026-08-30-music-studio-design.md`. Driven autonomously
 via ralph-loop. Definition of done in the plan / spec.
 
-- [ ] **Phase A** — install Beacon + BeaconLiveAdmin (spike CSS/Tailwind first);
-  router (`/` site, `/cms` admin); migrations; retire default Phoenix home + daisyUI.
-- [ ] **Phase B** — design system: Radix token layer (indigo/slate/small-radius) +
-  Capsize type scale + self-hosted Inter/Space Grotesk in the Beacon site stylesheet;
-  Beacon layout (sticky nav, footer).
-- [ ] **Phase C** — Beacon components (section, card, rate_table, nav, cta) + the
-  single page (Hero/About/Lessons&Rates/Contact) + seed content from `docs/info/`.
-- [ ] **Phase D** — `MusicStudio.Leads` context + `Lead` schema + migration + tested
-  changeset; `Leads.Notifier` (Swoosh); wire the inquiry form (Beacon event handler,
-  fallback mounted LiveView).
-- [ ] **Phase E** — verify (precommit; render; admin edit; form persists + emails);
-  update living docs; bump submodule pointer; push.
+- [x] **Phase D (Leads core)** — `MusicStudio.Leads` + `Lead` schema + migration +
+  tested changeset + `Leads.Notifier` (Swoosh). 7 tests, precommit green, pushed
+  (main 128594e7). Beacon-independent; form wiring pending the site build.
+- [!] **Phase A** — install Beacon — **BLOCKED**: Beacon incompatible with Phoenix
+  1.8 / Elixir 1.18 (see `checkpoint.md` "Beacon decision" + `lessons.md`). Parked as
+  jj change `mquosplq`. Needs Chris to choose fork-patch / downgrade / hand-built / wait.
+- [~] **Phase B** — design system (Radix indigo/slate/small-radius tokens + Capsize
+  type scale). Building now as portable CSS (reusable under any Beacon decision).
+- [~] **Phase C** — section content/markup (Hero/About/Lessons&Rates/Contact) from
+  `docs/info/`. Building as portable HEEx (ports to Beacon page templates later).
+- [ ] **Phase E** — wire inquiry form to Leads + verify; revisit once the CMS path is chosen.
 
 ## Then — Phase 2+: Buzz + EssenceUI (deferred)
 - [ ] Buzz integration (`wss://musicstudio.communities.buzz.xyz`) — leads on private

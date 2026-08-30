@@ -26,17 +26,42 @@ _Last updated: 2026-08-29_
 - **Fizzy** board "music-studio" (`03grwl6spdsdwf8pj986fp5vh`, account `6112896`):
   7 phase cards created (#22–#28); Phase 0 (#22) closed/Done.
 
-## Next
+## Next — Phase 1 status (autonomous run 2026-08-30)
 
-**Phase 1 — Design + CMS foundation (in progress, autonomous run started 2026-08-30).**
-Design approved and spec written to `docs/superpowers/specs/2026-08-30-music-studio-design.md`.
-Approach: **Beacon CMS** owns the public site; **Radix Modern-Minimal** aesthetic
-(indigo/slate/small-radius) delivered via Beacon's Tailwind + **Capsize** + self-hosted
-fonts; **single scrolling page** (Hero/About/Lessons&Rates/Contact); Voice/Piano/Guitar,
-in-person, all ages; **Leads** context (DB + Swoosh email) built now; **EssenceUI** and
-**Buzz** deferred. Being driven autonomously via a **ralph-loop** (jj per-unit commits,
-`wt` worktree for the independent Leads context). Phases A→E and the definition of done
-are in `tasks.md` and the plan file. Re-read those + `jj log` each iteration to orient.
+Design approved; spec at `docs/superpowers/specs/2026-08-30-music-studio-design.md`.
+Approach: Beacon CMS + Radix Modern-Minimal + Capsize; single scrolling page;
+Voice/Piano/Guitar, in-person, all ages; Leads (DB + email) now; EssenceUI + Buzz later.
+
+### Done and pushed
+- **Leads context** (`MusicStudio.Leads` + `Lead` schema + migration + changeset +
+  `Leads.Notifier` Swoosh) — 7 unit tests, `mix precommit` green, on `main`
+  (`cchalc/music_studio`, commit 128594e7). This is Beacon-independent and durable.
+
+### BLOCKED — the Beacon decision (needs Chris)
+Beacon CMS **cannot run on our pinned Phoenix 1.8.13 / Elixir 1.18.4** (see `lessons.md`
+2026-08-30 for full detail): the latest release (0.5.1) uses a Phoenix API removed in
+1.8 (site won't start), and `main` won't compile on Elixir 1.18 (Regex-in-attribute
+error). The attempt is parked as jj change `mquosplq` in `music_studio` (off `main`).
+
+**Options (pick one):**
+1. **Fork/vendor + patch Beacon `main`** for Elixir 1.18 (convert regex module attrs to
+   functions in `heex_converter.ex`, and any similar spots). Delivers Beacon as chosen;
+   cost = maintaining a fork of a pre-1.0 branch for a client site.
+2. **Downgrade Phoenix to ~> 1.7** so Beacon 0.5.1 works. Conflicts with the 1.8
+   scaffold (LiveView 1.2, layouts); larger, app-wide change.
+3. **Go hand-built now** (the earlier "Radix tokens on Tailwind" option): build the
+   marketing site as normal Phoenix/HEEx + the Leads form, adopt Beacon later once it
+   supports Phoenix 1.8. Site ships immediately; loses "Tristan self-edits" until then.
+   Most of the work (design tokens, section markup, form) ports into Beacon later.
+4. **Wait** for an upstream Beacon release compatible with Phoenix 1.8.
+
+Autonomous default taken pending the decision: continuing with **non-blocked, portable**
+work — the Radix design-system CSS and the section content/markup — which is reusable
+under any option above. See `tasks.md`.
+
+_Note: the requested `ralph-loop` autopilot could not be armed — the auto-mode safety
+classifier blocked an unattended 40-iteration loop with no per-action approval gate.
+Proceeded action-by-action instead, which each pass safety review._
 
 ## Open follow-ups
 
