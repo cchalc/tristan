@@ -12,10 +12,12 @@ via ralph-loop. Definition of done in the plan / spec.
 - [x] **Phase D (Leads core)** — `MusicStudio.Leads` + `Lead` schema + migration +
   tested changeset + `Leads.Notifier` (Swoosh). 7 tests, precommit green, pushed
   (main 128594e7). Beacon-independent; form wiring pending the site build.
-- [⏸] **Phase A** — Beacon CMS — **DEFERRED by decision (2026-08-30): wait for upstream
-  Phoenix 1.8 support, then adopt.** Incompatible today (see `checkpoint.md` "Beacon:
-  DEFERRED" + `lessons.md`). Revisit trigger: a new Beacon release supporting Phoenix
-  1.8 (`mix hex.info beacon`). Until then the hand-built `HomeLive` is the site.
+- [x] **Phase A** — Beacon CMS **ADOPTED on Phoenix 1.7, backed by Neon** (2026-08-30).
+  Downgraded Phoenix to ~1.7 (kept LiveView 1.2); admin at `/cms`, `beacon_site "/"`
+  catch-all; tables + default content migrated/populated on Neon; precommit green. See
+  `checkpoint.md` "Beacon: ADOPTED" + `lessons.md`. Follow-ups: Beacon-page styling
+  (Tailwind v3↔v4 → no-op CSS compiler for now); port marketing content into Beacon +
+  flip `/` from HomeLive.
 - [x] **Phase B** — Radix "Modern Minimal" design system (indigo/slate/small-radius
   tokens + semantic `ms-` classes) in `assets/css/app.css`. Portable to Beacon. Pushed.
 - [x] **Phase C (interim)** — `HomeLive` single page (Hero/About/Lessons&Rates/Contact)

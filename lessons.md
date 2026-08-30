@@ -98,3 +98,32 @@ multi-site/host setups) — not required for one site at `/`.
 The attempt is parked as jj change **`mquosplq`** ("WIP: Beacon CMS install —
 BLOCKED …") in `music_studio`, off `main`. `main` holds the green Leads context.
 **Decision needed from Chris** — see `checkpoint.md` "Beacon decision".
+
+### 2026-08-30 — Beacon CMS made to work by downgrading Phoenix to 1.7 (RESOLVES above)
+Chris chose to accommodate Beacon by downgrading Phoenix rather than waiting for 1.8.
+What it took (all on `music_studio` main 4d379eff, backed by **Neon**):
+- **`phoenix ~> 1.7.0`** (resolved 1.7.24) — restores `Phoenix.Endpoint.Supervisor.config/2`.
+  **LiveView stays 1.2** (its req is `~> 1.6.15 or ~> 1.7.0 or ~> 1.8.0`, so 1.7 is fine).
+- Had to **remove the `Phoenix.CodeReloader` compile listener** (`listeners:` in `mix.exs`)
+  — that's a Phoenix 1.8 feature; on 1.7 it errors "given as a child to a supervisor".
+- `gettext ~> 0.26`, `{:ex_aws, "~> 2.5", override: true}` (as before). **Manual install**
+  (no igniter): `use Beacon.Router`/`use Beacon.LiveAdmin.Router`, `:beacon`/`:beacon_admin`
+  pipelines, `beacon_live_admin "/cms"`, `beacon_site "/"` last; `config :beacon,
+  music_studio: [site, repo, endpoint, router]`; `{Beacon, sites: [...]}` in the app tree;
+  migration `Beacon.Migration.up/down`.
+- **Boot population is slow + fragile:** Beacon.Boot seeds default components/layouts/pages
+  at startup via `GenServer.call(..., 15_000)` (hardcoded 15s). The per-component HEEx
+  compile (worsened by the LV 1.2 deprecation path) blows the 15s. It's idempotent and a
+  timed-out step still commits server-side, so **repeated boots converge** — I looped
+  `mix run -e` boots until `beacon_components`/layouts/pages stopped growing (checked via
+  `psql` against Neon; the app can't boot to run scripts until Boot succeeds). Note: NO
+  `timeout`/`gtimeout` binary on this machine — don't rely on it.
+- **Tailwind v3↔v4 wall:** after population, boot still failed at `load_runtime_css` —
+  Beacon 0.5.1's runtime CSS emits `@import "tailwindcss/base"` (v3) but the app's Tailwind
+  binary is v4.3.0 → "Can't resolve 'tailwindcss/base'". Fixed by a **custom
+  `css_compiler`** (`MusicStudioWeb.BeaconRuntimeCSS`, a `Beacon.RuntimeCSS` behaviour)
+  set in the site config that skips the v3 Tailwind run and returns a small base
+  stylesheet. Trade-off: Beacon pages are only lightly styled until a v4 CSS path is built.
+- **Tests:** set `config :beacon, music_studio: [mode: :testing]` in `config/test.exs`
+  (deep-merges) so Beacon skips boot population under test — keeps `mix precommit` fast/green.
+- Beacon backed by Neon automatically because it uses `MusicStudio.Repo` (Neon in dev).

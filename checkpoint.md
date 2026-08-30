@@ -46,21 +46,34 @@ Voice/Piano/Guitar, in-person, all ages; Leads (DB + email) now; EssenceUI + Buz
   **This is the interim/Option-3 path** — section markup + `ms-` classes port into a
   Beacon page/template later if/when the CMS decision lands there.
 
-### Beacon: DEFERRED — decision made 2026-08-30 ✅
-**Chris's decision: adopt Beacon CMS later; wait for upstream Phoenix 1.8 support.**
-The site stays **hand-built** (the shipped `HomeLive`) for now. **Do NOT re-attempt a
-Beacon install until an upstream release supports Phoenix 1.8 / Elixir 1.18** — both
-current versions fail (0.5.1 uses `Phoenix.Endpoint.Supervisor.config/2`, removed in
-1.8; `main` won't compile on Elixir 1.18 — regex-in-attribute error). Full detail +
-manual-install recipe are in `lessons.md` (2026-08-30).
+### Beacon: ADOPTED on Phoenix 1.7, backed by Neon (2026-08-30) ✅
+Decision reversed (from "wait for 1.8") to **downgrade Phoenix to 1.7** so Beacon 0.5.1
+works. Done and pushed (music_studio main 4d379eff):
+- **Phoenix `~> 1.7.0`** (1.7.24); LiveView **stays 1.2** (it supports Phoenix 1.7).
+  Removed the 1.8-only `Phoenix.CodeReloader` compile listener from `mix.exs`.
+- **beacon 0.5.1 + beacon_live_admin 0.4.3** (hex), `gettext ~> 0.26`,
+  `{:ex_aws, "~> 2.5", override: true}`. Installed **manually** (no igniter).
+- Router: admin at **`/cms`**, `beacon_site "/"` as a catch-all **after** `HomeLive`
+  (HomeLive still owns exact `/`; Beacon serves every other path).
+- **Backed by Neon**: Beacon uses `MusicStudio.Repo` (= Neon in dev). `create_beacon_tables`
+  migrated on Neon; default content (34 components / 1 layout / 2 error pages / 1 home
+  page) populated on Neon. Verified live: `/cms` 200, admin pages 200, unknown paths
+  served by Beacon (404 page from Neon), `/` still the marketing page.
+- Beacon runs in **`:testing` mode** under test env (skips boot population); precommit
+  green (14 tests).
 
-**Revisit trigger:** a new Beacon release that supports Phoenix 1.8. Check with
-`mix hex.info beacon` (look past 0.5.1) or Beacon's CHANGELOG / the `endpoint_config`
-+ `heex_converter` fixes. When it lands, do a **fresh** install against that release
-(the parked jj change `mquosplq` will be stale — follow the `lessons.md` recipe, not the
-old WIP). Porting the hand-built site into Beacon then: `ms-` design tokens → a Beacon
-site stylesheet; `HomeLive` sections → a Beacon page template; the inquiry form → a
-Beacon page event handler calling `Leads.create_lead/1` (already built and tested).
+**Known caveats / follow-ups (not blockers):**
+- **Tailwind v3↔v4 mismatch:** Beacon 0.5.1's runtime CSS assumes Tailwind v3
+  (`@import "tailwindcss/base"`), but the app is on Tailwind v4 + daisyUI 5. Worked
+  around with a no-op CSS compiler (`MusicStudioWeb.BeaconRuntimeCSS`) that serves a
+  small base stylesheet — so **Beacon pages are only lightly styled**. Full styling
+  needs either a v4-compatible Beacon CSS pipeline or aligning Tailwind versions.
+- **LiveView 1.2 HEEx deprecation** warnings at Beacon boot ("use TagEngine.compile/2")
+  — cosmetic; Beacon 0.5.1 targets an older LV.
+- **Port the marketing content into Beacon** and flip `/` from `HomeLive` to a Beacon
+  page when ready: `ms-` tokens → Beacon stylesheet; `HomeLive` sections → a Beacon page
+  template; inquiry form → a Beacon page event handler calling `Leads.create_lead/1`.
+- The old parked `mquosplq` WIP is now obsolete (superseded); can be abandoned.
 
 _Note: the requested `ralph-loop` autopilot could not be armed — the auto-mode safety
 classifier blocked an unattended 40-iteration loop with no per-action approval gate.
