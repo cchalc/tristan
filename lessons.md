@@ -127,6 +127,15 @@ What it took (all on `music_studio` main 4d379eff, backed by **Neon**):
 - **Tests:** set `config :beacon, music_studio: [mode: :testing]` in `config/test.exs`
   (deep-merges) so Beacon skips boot population under test — keeps `mix precommit` fast/green.
 - Beacon backed by Neon automatically because it uses `MusicStudio.Repo` (Neon in dev).
+- **Single-endpoint gotcha:** Beacon builds public URLs (media assets, etc.) via
+  `site_endpoint.proxy_endpoint()` (`Beacon.ProxyEndpoint.public_uri/1`). That hook comes
+  from Beacon's multi-endpoint "proxy endpoint" setup, which the manual single-endpoint
+  install skips → the `/cms/.../media_library` admin page raised
+  `Beacon.LiveAdmin.ClusterError` ("...url_for... on node :nonode@nohost"; the real error,
+  hidden by `:erpc`, was `MusicStudioWeb.Endpoint.proxy_endpoint/0 is undefined`). Fix:
+  add `def proxy_endpoint, do: __MODULE__` to the endpoint — it's its own proxy, and
+  Beacon only reads `:url`/`:http`/`:https` config off it (media URLs resolve correctly,
+  e.g. `http://localhost:4000/__beacon_media__/...`).
 
 ### 2026-08-30 — Styling Beacon pages with Tailwind v4 (custom css_compiler)
 Beacon's `css_compiler` is swappable (`Beacon.RuntimeCSS` behaviour: `config/1` +
