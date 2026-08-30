@@ -1,0 +1,3 @@
+[submodule "music_studio"]
+	path = music_studio
+	url = git@github.com:cchalc/music_studio.git
