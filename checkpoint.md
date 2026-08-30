@@ -66,6 +66,14 @@ _Note: the requested `ralph-loop` autopilot could not be armed — the auto-mode
 classifier blocked an unattended 40-iteration loop with no per-action approval gate.
 Proceeded action-by-action instead, which each pass safety review._
 
+### Backend database — Neon Postgres (2026-08-30)
+Dev DB is now **Neon** (hosted Postgres). `config/dev.exs` uses `DATABASE_URL` when set,
+else local Postgres; tests stay on local (`config/test.exs`). The URL + password live
+**only in `.envrc`** (git-ignored, direnv) — never committed. SSL on (`ssl: [verify:
+:verify_none]`), `prepare: :unnamed` for Neon's PgBouncer pooler. `create_leads`
+migration is applied on Neon (verified: table live, count 0). music_studio main
+`431690be`. ⚠️ **Rotate the Neon password** — it was pasted in chat once.
+
 ## Next up — backend features (starting 2026-08-30)
 
 Phase 1 interim site is shipped and green; moving to backend work. Both repos clean and
@@ -90,4 +98,5 @@ pointer in `Tristan`. Candidate backend features (Chris to prioritize):
   was fetched via the Databricks npm proxy and placed in `_build/` (wiped by
   `rm -rf _build`). Consider pinning `config :esbuild, path:` to a stable location.
 - Rotate the Fizzy token (it was pasted in chat once) and update `.envrc`.
+- **Rotate the Neon DB password** (pasted in chat once); update `DATABASE_URL` in `.envrc`.
 - Optional: open GitHub issues for Phase 1/2 tasks on `cchalc/music_studio`.
