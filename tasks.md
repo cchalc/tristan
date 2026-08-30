@@ -12,9 +12,10 @@ via ralph-loop. Definition of done in the plan / spec.
 - [x] **Phase D (Leads core)** — `MusicStudio.Leads` + `Lead` schema + migration +
   tested changeset + `Leads.Notifier` (Swoosh). 7 tests, precommit green, pushed
   (main 128594e7). Beacon-independent; form wiring pending the site build.
-- [!] **Phase A** — install Beacon — **BLOCKED**: Beacon incompatible with Phoenix
-  1.8 / Elixir 1.18 (see `checkpoint.md` "Beacon decision" + `lessons.md`). Parked as
-  jj change `mquosplq`. Needs Chris to choose fork-patch / downgrade / hand-built / wait.
+- [⏸] **Phase A** — Beacon CMS — **DEFERRED by decision (2026-08-30): wait for upstream
+  Phoenix 1.8 support, then adopt.** Incompatible today (see `checkpoint.md` "Beacon:
+  DEFERRED" + `lessons.md`). Revisit trigger: a new Beacon release supporting Phoenix
+  1.8 (`mix hex.info beacon`). Until then the hand-built `HomeLive` is the site.
 - [x] **Phase B** — Radix "Modern Minimal" design system (indigo/slate/small-radius
   tokens + semantic `ms-` classes) in `assets/css/app.css`. Portable to Beacon. Pushed.
 - [x] **Phase C (interim)** — `HomeLive` single page (Hero/About/Lessons&Rates/Contact)

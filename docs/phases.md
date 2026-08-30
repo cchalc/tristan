@@ -19,21 +19,26 @@ Stand up the app and make it agent-friendly and reproducible.
   convention (`config/dev.secret.exs`).
 - ✅ Git repos: app (`cchalc/music_studio`) + this workspace, linked via submodule.
 
-## Phase 1 — Core marketing site 🔜
-The public face. Content and design; no external services yet.
+## Phase 1 — Core marketing site ✅ (interim; CMS deferred)
+The public face. Single scrolling page, "Modern Minimal" (Radix-inspired) design.
+Design decisions in `docs/superpowers/specs/2026-08-30-music-studio-design.md`.
 
-- ⬜ Site layout, nav, footer, responsive shell.
-- ⬜ Pages: Home, About, Lessons/Services, Contact.
-- ⬜ Design pass (typography, spacing, imagery) per the `ui-and-assets` skill.
-- ⬜ SEO basics (title/meta, sitemap, robots), favicon, Open Graph.
+- ✅ Radix design system (indigo/slate/small-radius tokens + `ms-` classes, `app.css`).
+- ✅ `HomeLive` single page: Hero, About, Lessons & Rates, Contact. Sticky nav + footer.
+- ⏸ **Content management via Beacon CMS — DEFERRED (decided 2026-08-30): wait for
+  upstream Phoenix 1.8 support, then adopt** (site is incompatible with our Phoenix 1.8
+  / Elixir 1.18 today — see `checkpoint.md` + `lessons.md`). Interim = hand-built HEEx;
+  it ports into Beacon later. Until then Tristan can't self-edit content.
+- ⬜ Self-host Inter/Space Grotesk woff2 (currently system fallback).
+- ⬜ SEO basics (title/meta, sitemap, robots), favicon, Open Graph; portrait image.
 
-## Phase 2 — Leads / contact 🔜
+## Phase 2 — Leads / contact ✅ (core)
 Capture prospective students.
 
-- ⬜ `Leads` context + schema + migration (name, email, message, source).
-- ⬜ Contact form (LiveView) with validation via `to_form`.
-- ⬜ Store inquiries; basic admin/list view.
-- ⬜ (Optional) email notification to the teacher on new inquiry.
+- ✅ `MusicStudio.Leads` context + `Lead` schema + migration + validated changeset.
+- ✅ Contact form (in `HomeLive`) with `to_form` validation, wired to `create_lead/1`.
+- ✅ Email notification to the teacher on new inquiry (`Leads.Notifier`, Swoosh).
+- ⬜ Admin/list view of inquiries (deferred; Buzz may own leads later).
 
 ## Phase 3 — Scheduling / calendar ⬜
 Lesson booking and availability.

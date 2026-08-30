@@ -46,27 +46,21 @@ Voice/Piano/Guitar, in-person, all ages; Leads (DB + email) now; EssenceUI + Buz
   **This is the interim/Option-3 path** — section markup + `ms-` classes port into a
   Beacon page/template later if/when the CMS decision lands there.
 
-### BLOCKED — the Beacon decision (needs Chris)
-Beacon CMS **cannot run on our pinned Phoenix 1.8.13 / Elixir 1.18.4** (see `lessons.md`
-2026-08-30 for full detail): the latest release (0.5.1) uses a Phoenix API removed in
-1.8 (site won't start), and `main` won't compile on Elixir 1.18 (Regex-in-attribute
-error). The attempt is parked as jj change `mquosplq` in `music_studio` (off `main`).
+### Beacon: DEFERRED — decision made 2026-08-30 ✅
+**Chris's decision: adopt Beacon CMS later; wait for upstream Phoenix 1.8 support.**
+The site stays **hand-built** (the shipped `HomeLive`) for now. **Do NOT re-attempt a
+Beacon install until an upstream release supports Phoenix 1.8 / Elixir 1.18** — both
+current versions fail (0.5.1 uses `Phoenix.Endpoint.Supervisor.config/2`, removed in
+1.8; `main` won't compile on Elixir 1.18 — regex-in-attribute error). Full detail +
+manual-install recipe are in `lessons.md` (2026-08-30).
 
-**Options (pick one):**
-1. **Fork/vendor + patch Beacon `main`** for Elixir 1.18 (convert regex module attrs to
-   functions in `heex_converter.ex`, and any similar spots). Delivers Beacon as chosen;
-   cost = maintaining a fork of a pre-1.0 branch for a client site.
-2. **Downgrade Phoenix to ~> 1.7** so Beacon 0.5.1 works. Conflicts with the 1.8
-   scaffold (LiveView 1.2, layouts); larger, app-wide change.
-3. **Go hand-built now** (the earlier "Radix tokens on Tailwind" option): build the
-   marketing site as normal Phoenix/HEEx + the Leads form, adopt Beacon later once it
-   supports Phoenix 1.8. Site ships immediately; loses "Tristan self-edits" until then.
-   Most of the work (design tokens, section markup, form) ports into Beacon later.
-4. **Wait** for an upstream Beacon release compatible with Phoenix 1.8.
-
-Autonomous default taken pending the decision: continuing with **non-blocked, portable**
-work — the Radix design-system CSS and the section content/markup — which is reusable
-under any option above. See `tasks.md`.
+**Revisit trigger:** a new Beacon release that supports Phoenix 1.8. Check with
+`mix hex.info beacon` (look past 0.5.1) or Beacon's CHANGELOG / the `endpoint_config`
++ `heex_converter` fixes. When it lands, do a **fresh** install against that release
+(the parked jj change `mquosplq` will be stale — follow the `lessons.md` recipe, not the
+old WIP). Porting the hand-built site into Beacon then: `ms-` design tokens → a Beacon
+site stylesheet; `HomeLive` sections → a Beacon page template; the inquiry form → a
+Beacon page event handler calling `Leads.create_lead/1` (already built and tested).
 
 _Note: the requested `ralph-loop` autopilot could not be armed — the auto-mode safety
 classifier blocked an unattended 40-iteration loop with no per-action approval gate.
