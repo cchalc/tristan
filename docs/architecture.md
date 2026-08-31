@@ -83,7 +83,8 @@ flowchart TB
 
 Session continuity lives in the project repo's living docs (`checkpoint.md`, `tasks.md`,
 `lessons.md`) — see `../CLAUDE.md` for the working protocol. A full review of what was
-specified vs. delivered is in [`specifications-review.md`](specifications-review.md).
+specified vs. delivered is in [`specifications-review.md`](specifications-review.md); the
+analytics-ready domain schema is in [`data-model.md`](data-model.md).
 
 ## Two altitudes
 

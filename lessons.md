@@ -148,3 +148,23 @@ each `.template`) to a temp dir, then runs the app's **Tailwind v4** binary
 flagged the temp-path `File.*`/`System.cmd` as low-confidence Traversal/CI: added inline
 `# sobelow_skip [...]` and set `skip: true` in `.sobelow-conf` (inline skips are ignored
 unless skip is enabled). `exit: "Low"` in that config means low findings fail `mix precommit`.
+
+### 2026-08-31 — Analytics data model (UUIDv7 + views) gotchas
+- **UUIDv7 keys:** `{:uuidv7, "~> 1.0"}` gives an `Ecto.Type` (`type/0 -> :uuid`,
+  `autogenerate/0`). A `MusicStudio.Schema` base macro sets `@primary_key {:id, UUIDv7,
+  autogenerate: true}` + `@foreign_key_type UUIDv7` + `@timestamps_opts [type:
+  :utc_datetime_usec]`; migrations use `create table(:x, primary_key: false)` + `add :id,
+  :uuid, primary_key: true` and `references(..., type: :uuid)`. The app generates keys, so
+  no DB default is needed (Neon PG < 18 lacks `uuidv7()`).
+- **Views block column alters:** once `analytics_lesson_facts` selected `students.last_name`,
+  Ecto's `modify :last_name, :string, null: true` failed with `cannot alter type of a
+  column used by a view` — `modify` re-types the column. Fix: raw
+  `execute "ALTER TABLE students ALTER COLUMN last_name DROP NOT NULL"` (changes only the
+  constraint, not the type). Prefer raw `ALTER … DROP/SET NOT NULL` for nullability changes
+  on columns a view references (or drop/recreate the view around it).
+- **Sobelow + raw SQL:** `Repo.query!(sql)` for the view readers tripped `SQL.Query` (low
+  confidence) even with literal SQL → inline `# sobelow_skip ["SQL.Query"]`.
+- **Same-timestamp migrations:** two `mix ecto.gen.migration` calls in one second produced
+  files with the same version → rename one later (versions must be unique + ordered).
+- **Append-only events:** `timestamps(type: :utc_datetime_usec, updated_at: false)` gives an
+  insert-only fact row (no `updated_at`), matching an immutable lakehouse event stream.

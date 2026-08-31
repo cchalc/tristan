@@ -28,6 +28,15 @@ via ralph-loop. Definition of done in the plan / spec.
 - [ ] **Follow-ups**: self-host Inter/Space Grotesk woff2 (currently system fallback);
   decide CMS path (see checkpoint "Beacon decision"); SEO meta/OG/sitemap; portrait image.
 
+## Data model (2026-08-31) ✅
+- [x] Analytics-ready domain model on Neon — Catalog/Teaching/Billing/CRM/Analytics
+  contexts, UUIDv7 keys, soft-delete/timestamps/enums/cents, append-only `events`, two
+  reporting views, idempotent reference seeds. 31 tests, precommit green. music_studio
+  6e89f06f. Docs: `docs/data-model.md`.
+- [ ] **Follow-ups**: wire `Analytics.record_event/1` into context writes (lead created,
+  lesson completed, payment received); richer marts; the actual Delta/lakehouse pipeline;
+  admin CRUD screens for the new entities.
+
 ## Then — Phase 2+: Buzz + EssenceUI (deferred)
 - [ ] Buzz integration (`wss://musicstudio.communities.buzz.xyz`) — leads on private
   channels + student community.

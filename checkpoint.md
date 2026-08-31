@@ -89,6 +89,19 @@ else local Postgres; tests stay on local (`config/test.exs`). The URL + password
 migration is applied on Neon (verified: table live, count 0). music_studio main
 `431690be`. ⚠️ **Rotate the Neon password** — it was pasted in chat once.
 
+### Analytics-ready data model (2026-08-31) ✅
+A full domain model landed on `music_studio` main (6e89f06f), backed by **Neon**, with
+**Ecto owning the modeling**. UUIDv7 keys (via `MusicStudio.Schema` base macro + `uuidv7`
+dep), soft-delete + `utc_datetime_usec` timestamps + string enums + cents/CAD money +
+jsonb — all CDC-friendly for the eventual lakehouse. Contexts: **Catalog** (teachers,
+locations, instruments, offerings), **Teaching** (guardians, students, enrollments,
+lessons), **Billing** (invoices, line items, payments), **CRM** (campaigns, touchpoints +
+`convert_lead_to_student/2`; funnel fields added to the existing `Lead`), **Analytics**
+(append-only `events` + recorder + view readers). Two reporting views
+(`analytics_lesson_facts`, `analytics_funnel`). Reference data seeded idempotently
+(Tristan / studio / voice·piano·guitar / rate card). 31 tests, precommit green. Design +
+lakehouse path documented in `docs/data-model.md`. `leads` intentionally stays bigint.
+
 ## Next up — backend features (starting 2026-08-30)
 
 Phase 1 interim site is shipped and green; moving to backend work. Both repos clean and
