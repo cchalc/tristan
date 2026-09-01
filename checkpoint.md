@@ -125,6 +125,15 @@ pointer in `Tristan`. Candidate backend features (Chris to prioritize):
 - **esbuild is fragile:** `registry.npmjs.org` is blocked on this network; the binary
   was fetched via the Databricks npm proxy and placed in `_build/` (wiped by
   `rm -rf _build`). Consider pinning `config :esbuild, path:` to a stable location.
-- Rotate the Fizzy token (it was pasted in chat once) and update `.envrc`.
-- **Rotate the Neon DB password** (pasted in chat once); update `DATABASE_URL` in `.envrc`.
+- **Hosted services → `tchalcraftmusic@gmail.com`** (2026-09-01). GitHub stays `cchalc`.
+  See "Service accounts" in `AGENTS.md`.
+  - **Neon: DONE.** Fresh project (`orange-pine-95532643`, host `ep-cool-band-ayp0pzgo-pooler`,
+    us-east-2) under the new email; `DATABASE_URL` swapped in `.envrc`; migrations re-run;
+    Beacon content re-populated (34/1/1/2 via boot-loop); full app boots clean. Delete the
+    old Neon project once satisfied.
+  - **Fizzy: token swapped.** New `FIZZY_API_TOKEN` in `.envrc` belongs to the new-email
+    user (Tristan Chalcraft). But the new email joined the **existing** account
+    `6112896` ("CHRISTOPHER's Fizzy") as a *member* — account/board id unchanged, still
+    **owned** by the old identity. Full account-ownership transfer is a separate step if wanted.
+  - Supersedes the old "rotate the pasted-once password/token" follow-ups.
 - Optional: open GitHub issues for Phase 1/2 tasks on `cchalc/music_studio`.

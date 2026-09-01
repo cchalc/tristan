@@ -60,6 +60,16 @@ git submodule update --remote music_studio # pull the latest app commit
 When you advance the app, commit the new submodule pointer here so the project repo
 tracks a known-good app revision.
 
+## Service accounts
+
+All **hosted services** for this project are owned by
+**`tchalcraftmusic@gmail.com`** — Neon (Postgres) and Fizzy (tracking) today, and
+any added later (Stripe, an email/SMTP provider, analytics, S3, hosting). Create new
+service accounts under that email.
+
+**Exception: GitHub** stays on the personal **`cchalc`** account (repos remain
+`cchalc/tristan` and `cchalc/music_studio`).
+
 ## Tracking
 
 - `docs/phases.md` is the roadmap and the source for **Fizzy** cards.
